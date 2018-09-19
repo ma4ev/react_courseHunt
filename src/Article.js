@@ -1,4 +1,5 @@
 import React , {Component} from 'react'
+import CommentsList from './CommentsList'
 
 export default class Article extends Component{
 
@@ -11,7 +12,6 @@ export default class Article extends Component{
   }
 
   render(){
-    console.log('---', this.props)
 
     const {article} = this.props
     const {isOpen} = this.state
@@ -30,10 +30,17 @@ export default class Article extends Component{
   getBody(){
     if(!this.state.isOpen) return null
     const {article} = this.props
-    return <section>{article.text}</section>
+    return (
+      <section>
+        {article.text}
+        <CommentsList comments = {article.comments} />
+      </section>
+    )
   }
 
-  toggleOpen = () => {
+  toggleOpen = (ev) => {
+    ev.preventDefault()
+    console.log('---', ev.nativeEvent)
     this.setState({
       isOpen: !this.state.isOpen
     })
